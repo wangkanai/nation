@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
    <ItemGroup>
-      <PackageReference Include="JetBrains.Annotations"/>
       <PackageReference Include="Microsoft.EntityFrameworkCore"/>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
       <PackageReference Include="Microsoft.Extensions.Identity.Stores"/>
-      <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
-      <PackageReference Include="Wangkanai.System" />
+      <PackageReference Include="JetBrains.Annotations"/>
+      <PackageReference Include="Wangkanai.System"/>
+      <PackageReference Include="Wangkanai.Domain" />
    </ItemGroup>
 
 </Project>
