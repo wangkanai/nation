@@ -11,13 +11,12 @@
 
       <Company>Wangkanai</Company>
       <Authors>Sarin Na Wangkanai</Authors>
-      <Copyright>Copyright © 2018-$([System.DateTime]::Now.ToString(`yyyy`)) Sarin Na Wangkanai, Wangkanai Detection contributors.</Copyright>
+      <Copyright>Copyright © 2018-2025 Sarin Na Wangkanai, All rights reserved</Copyright>
       <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
    </PropertyGroup>
 
    <PropertyGroup>
       <TargetFramework>net9.0</TargetFramework>
-      <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
       <ImplicitUsings>enable</ImplicitUsings>
 
