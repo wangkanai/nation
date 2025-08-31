@@ -1,0 +1,22 @@
+﻿<Solution>
+  <Folder Name="/.github/">
+    <File Path=".github\FUNDING.yml" />
+    <File Path=".github\RELEASE.yml" />
+    <File Path=".github\workflows\dotnet.yml" />
+  </Folder>
+  <Folder Name="/.solutions/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="README.md" />
+    <File Path="build.ps1" />
+    <File Path="sign.ps1" />
+    <File Path="md-styles.css" />
+    <File Path="LICENSE" />
+  </Folder>
+  <Folder Name="/Nation/">
+    <Project Path="src\Wangkanai.Nation.csproj" Type="Classic C#" />
+    <Project Path="test\Wangkanai.Nation.Tests.csproj" Type="Classic C#" />
+    <Project Path="benchmark\Wangkanai.Nation.Benchmark.csproj" Type="Classic C#" />
+  </Folder>
+</Solution>

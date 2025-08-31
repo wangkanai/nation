@@ -1,0 +1,31 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <FrameworkVersion>9.0.0</FrameworkVersion>
+    <EntityFrameworkVersion>9.0.0</EntityFrameworkVersion>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <!--sourcelink-->
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0"/>
+    
+    <!--annotations-->
+    <PackageVersion Include="JetBrains.Annotations" Version="2024.2.0"/>
+    
+    <!--entityframework-->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(EntityFrameworkVersion)"/>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFrameworkVersion)"/>
+    
+    <!--extensions-->
+    <PackageVersion Include="Microsoft.Extensions.Identity.Stores" Version="$(FrameworkVersion)"/>
+    
+    <!--testing-->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
+    <PackageVersion Include="xunit" Version="2.9.0"/>
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2"/>
+    <PackageVersion Include="coverlet.collector" Version="6.0.2"/>
+    
+    <!--benchmarking-->
+    <PackageVersion Include="BenchmarkDotNet" Version="0.14.0"/>
+  </ItemGroup>
+</Project>
