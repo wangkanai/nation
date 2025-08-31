@@ -1,40 +1,44 @@
 <Project>
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <WarningsNotAsErrors>NU1605;CS8618</WarningsNotAsErrors>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-  </PropertyGroup>
+   <PropertyGroup>
+      <VersionPrefix>1.0.0</VersionPrefix>
+      <Title>Wangkanai Nation</Title>
+      <PackageTags>nation;country;entity;domain;ddd;</PackageTags>
+      <Description>Nation: Seed your dataset with actual country data</Description>
 
-  <PropertyGroup>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <Title>Wangkanai Nation</Title>
-    <PackageTags>nation;country;entity;domain;ddd;</PackageTags>
-    <Description>Nation: Seed your dataset with actual country data</Description>
-    <PackageProjectUrl>https://github.com/wangkanai/nation</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/wangkanai/nation.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
+      <RepositoryType>git</RepositoryType>
+      <PackageProjectUrl>https://github.com/wangkanai/nation</PackageProjectUrl>
+      <RepositoryUrl>https://github.com/wangkanai/nation.git</RepositoryUrl>
 
-  <PropertyGroup>
-    <Authors>Sarin Na Wangkanai</Authors>
-    <Company>Wangkanai</Company>
-    <Copyright>Copyright © 2018-$([System.DateTime]::Now.ToString(`yyyy`)) Sarin Na Wangkanai, Wangkanai Detection contributors.</Copyright>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-  </PropertyGroup>
+      <Company>Wangkanai</Company>
+      <Authors>Sarin Na Wangkanai</Authors>
+      <Copyright>Copyright © 2018-$([System.DateTime]::Now.ToString(`yyyy`)) Sarin Na Wangkanai, Wangkanai Detection contributors.</Copyright>
+      <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Wangkanai.Nation'">
-    <PackageIcon>wangkanai-logo.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>
+   <PropertyGroup>
+      <TargetFramework>net9.0</TargetFramework>
+      <LangVersion>latest</LangVersion>
+      <Nullable>enable</Nullable>
+      <ImplicitUsings>enable</ImplicitUsings>
 
-  <ItemGroup Condition="'$(MSBuildProjectName)' == 'Wangkanai.Nation'">
-    <None Include="$(MSBuildThisFileDirectory)Assets\wangkanai-logo.png" Pack="true" PackagePath="\" />
-    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
+      <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+      <PublishRepositoryUrl>true</PublishRepositoryUrl>
+      <EmbedUntrackedSources>true</EmbedUntrackedSources>
+      <IncludeSymbols>true</IncludeSymbols>
+      <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+   </PropertyGroup>
+
+   <PropertyGroup>
+      <RepoRoot Condition=" '$(RepoRoot)' == '' OR !HasTrailingSlash('$(RepoRoot)') ">$(MSBuildThisFileDirectory)</RepoRoot>
+   </PropertyGroup>
+
+   <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Wangkanai.Nation'">
+      <PackageIcon>wangkanai-logo.png</PackageIcon>
+      <PackageReadmeFile>README.md</PackageReadmeFile>
+   </PropertyGroup>
+
+   <ItemGroup Condition="'$(MSBuildProjectName)' == 'Wangkanai.Nation'">
+      <None Include="$(RepoRoot)\Assets\wangkanai-logo.png" Pack="true" PackagePath="\"/>
+      <None Include="$(RepoRoot)README.md" Pack="true" PackagePath="\"/>
+   </ItemGroup>
 </Project>
