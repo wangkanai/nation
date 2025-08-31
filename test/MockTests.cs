@@ -1,7 +1,5 @@
 // Copyright (c) 2014-2025 Sarin Na Wangkanai, All Rights Reserved.
 
-using Xunit;
-
 namespace Wangkanai.Nation.Tests;
 
 public class MockTests

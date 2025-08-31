@@ -6,7 +6,7 @@
       <PackageReference Include="Microsoft.Extensions.Identity.Stores"/>
       <PackageReference Include="JetBrains.Annotations"/>
       <PackageReference Include="Wangkanai.System"/>
-      <PackageReference Include="Wangkanai.Domain" />
+      <PackageReference Include="Wangkanai.Domain"/>
    </ItemGroup>
 
 </Project>

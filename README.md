@@ -10,16 +10,17 @@
 [![Patreon](https://img.shields.io/badge/patreon-support%20me-d9643a.svg)](https://www.patreon.com/wangkanai)
 [![GitHub](https://img.shields.io/github/license/wangkanai/nation)](https://github.com/wangkanai/nation/blob/main/LICENSE)
 
-A comprehensive .NET library providing structured data for countries, divisions, and urban areas. Perfect for seeding databases, building location-aware applications, and working with geographical data in your .NET projects.
+A comprehensive .NET library providing structured data for countries, divisions, and urban areas. Perfect for seeding databases, building location-aware applications, and working with geographical
+data in your .NET projects.
 
 ## Features
 
-🌍 **Countries**: Complete country data with ISO codes, names, and population  
-🗺️ **Divisions**: Administrative divisions (provinces, states, regions, etc.)  
-🏙️ **Urban Areas**: Cities, towns, districts, and other urban classifications  
-📊 **Entity Framework Support**: Built-in configurations for easy database integration  
-🎯 **Type-Safe**: Strongly-typed entities with proper inheritance  
-⚡ **Performance**: Optimized for both memory usage and query performance  
+🌍 **Countries**: Complete country data with ISO codes, names, and population
+🗺️ **Divisions**: Administrative divisions (provinces, states, regions, etc.)
+🏙️ **Urban Areas**: Cities, towns, districts, and other urban classifications
+📊 **Entity Framework Support**: Built-in configurations for easy database integration
+🎯 **Type-Safe**: Strongly-typed entities with proper inheritance
+⚡ **Performance**: Optimized for both memory usage and query performance
 
 ## Installation
 
@@ -85,28 +86,31 @@ await context.SaveChangesAsync();
 The library is built with Domain-Driven Design principles:
 
 - **Entities**: `Country`, `Division`, `Urban` with proper inheritance from `Entity<T>`
-- **Value Objects**: Strongly-typed identifiers and codes  
+- **Value Objects**: Strongly-typed identifiers and codes
 - **Configurations**: Entity Framework configurations for each model
 - **Seeds**: Pre-built datasets for common scenarios
 
 ## Supported Administrative Levels
 
 ### Countries
+
 - ISO 3166-1 numeric and alpha-2 codes
 - Native and English names
 - Population data
 
 ### Divisions (Administrative Subdivisions)
+
 - **States** (US, Australia)
 - **Provinces** (Canada, Thailand, China)
-- **Regions** (France, Italy)  
+- **Regions** (France, Italy)
 - **Counties** (UK, Ireland)
 - **Cantons** (Switzerland)
 - And many more...
 
 ### Urban Areas
+
 - **Cities** and **Towns**
-- **Districts** and **Wards** 
+- **Districts** and **Wards**
 - **Villages** and **Hamlets**
 - **Administrative Areas**
 

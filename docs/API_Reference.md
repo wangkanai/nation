@@ -3,20 +3,20 @@
 ## Table of Contents
 
 - [Core Domain](#core-domain)
-  - [IEntity&lt;T&gt;](#ientityt)
-  - [Entity&lt;T&gt;](#entityt)
+   - [IEntity&lt;T&gt;](#ientityt)
+   - [Entity&lt;T&gt;](#entityt)
 - [Country Model](#country-model)
-  - [Country](#country)
-  - [CountryConfiguration](#countryconfiguration)
-  - [CountrySeed](#countryseed)
+   - [Country](#country)
+   - [CountryConfiguration](#countryconfiguration)
+   - [CountrySeed](#countryseed)
 - [Division Models](#division-models)
-  - [Division (Abstract)](#division-abstract)
-  - [Administrative Division Types](#administrative-division-types)
-  - [DivisionConfiguration](#divisionconfiguration)
+   - [Division (Abstract)](#division-abstract)
+   - [Administrative Division Types](#administrative-division-types)
+   - [DivisionConfiguration](#divisionconfiguration)
 - [Urban Models](#urban-models)
-  - [Urban (Abstract)](#urban-abstract)
-  - [Urban Area Types](#urban-area-types)
-  - [UrbanConfiguration](#urbanconfiguration)
+   - [Urban (Abstract)](#urban-abstract)
+   - [Urban Area Types](#urban-area-types)
+   - [UrbanConfiguration](#urbanconfiguration)
 - [Seed Data](#seed-data)
 
 ---
@@ -30,19 +30,20 @@
 Generic entity interface that defines a unique identifier and transient state detection.
 
 #### Type Parameters
+
 - `T` - The type of the unique identifier. Must implement `IComparable<T>` and `IEquatable<T>`
 
 #### Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `Id` | `T` | Gets or sets the unique identifier for the entity |
+| Property | Type | Description                                       |
+|----------|------|---------------------------------------------------|
+| `Id`     | `T`  | Gets or sets the unique identifier for the entity |
 
 #### Methods
 
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `IsTransient()` | `bool` | Returns true if the entity is transient (not yet persisted) |
+| Method          | Return Type | Description                                                 |
+|-----------------|-------------|-------------------------------------------------------------|
+| `IsTransient()` | `bool`      | Returns true if the entity is transient (not yet persisted) |
 
 #### Example
 
@@ -52,7 +53,7 @@ using Wangkanai.Domain;
 public class CustomEntity : IEntity<int>
 {
     public int Id { get; set; }
-    
+
     public bool IsTransient() => Id == 0;
 }
 ```
@@ -66,28 +67,29 @@ public class CustomEntity : IEntity<int>
 Abstract base class providing entity functionality with unique identifier support, equality operations, and transient state detection.
 
 #### Type Parameters
+
 - `T` - The type of the unique identifier. Must implement `IComparable<T>` and `IEquatable<T>`
 
 #### Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `Id` | `T` | Gets or sets the unique identifier for the entity |
+| Property | Type | Description                                       |
+|----------|------|---------------------------------------------------|
+| `Id`     | `T`  | Gets or sets the unique identifier for the entity |
 
 #### Methods
 
-| Method | Return Type | Description |
-|--------|-------------|-------------|
-| `IsTransient()` | `bool` | Returns true if the entity ID equals the default value for type T |
-| `GetHashCode()` | `int` | Returns hash code based on ID (or base hash code if transient) |
-| `Equals(object?)` | `bool` | Compares entities based on ID and type |
+| Method            | Return Type | Description                                                       |
+|-------------------|-------------|-------------------------------------------------------------------|
+| `IsTransient()`   | `bool`      | Returns true if the entity ID equals the default value for type T |
+| `GetHashCode()`   | `int`       | Returns hash code based on ID (or base hash code if transient)    |
+| `Equals(object?)` | `bool`      | Compares entities based on ID and type                            |
 
 #### Operators
 
-| Operator | Description |
-|----------|-------------|
-| `==` | Equality comparison based on ID |
-| `!=` | Inequality comparison based on ID |
+| Operator | Description                       |
+|----------|-----------------------------------|
+| `==`     | Equality comparison based on ID   |
+| `!=`     | Inequality comparison based on ID |
 
 #### Example
 
@@ -111,7 +113,7 @@ var isEqual = product1 == product2; // true - same ID
 
 ### Country
 
-**Namespace:** `Wangkanai.Nation.Models`  
+**Namespace:** `Wangkanai.Nation.Models`
 **Inherits:** `Entity<int>`
 
 Represents a country with ISO codes, population, and localized names.
@@ -128,14 +130,14 @@ public Country(int id, string iso, int code, string name, string native, int pop
 
 #### Properties
 
-| Property | Type | Description | Max Length |
-|----------|------|-------------|------------|
-| `Id` | `int` | Unique country identifier (inherited) | - |
-| `Iso` | `string` | ISO 3166-1 alpha-2 code | 2 |
-| `Code` | `int` | International telephone country code | - |
-| `Name` | `string` | English country name | 100 |
-| `Native` | `string` | Native language country name | 100 |
-| `Population` | `int` | Country population | - |
+| Property     | Type     | Description                           | Max Length |
+|--------------|----------|---------------------------------------|------------|
+| `Id`         | `int`    | Unique country identifier (inherited) | -          |
+| `Iso`        | `string` | ISO 3166-1 alpha-2 code               | 2          |
+| `Code`       | `int`    | International telephone country code  | -          |
+| `Name`       | `string` | English country name                  | 100        |
+| `Native`     | `string` | Native language country name          | 100        |
+| `Population` | `int`    | Country population                    | -          |
 
 #### Example
 
@@ -145,7 +147,7 @@ using Wangkanai.Nation.Models;
 // Create a country
 var thailand = new Country(
     id: 764,
-    iso: "TH", 
+    iso: "TH",
     code: 66,
     name: "Thailand",
     native: "ไทย",
@@ -160,7 +162,7 @@ var isNew = thailand.IsTransient(); // false - has ID
 
 ### CountryConfiguration
 
-**Namespace:** `Wangkanai.Nation.Configurations`  
+**Namespace:** `Wangkanai.Nation.Configurations`
 **Implements:** `IEntityTypeConfiguration<Country>`
 
 Entity Framework configuration for Country entity.
@@ -175,7 +177,7 @@ public void Configure(EntityTypeBuilder<Country> builder)
            .HasMaxLength(2)
            .IsRequired();
 
-    // English name: required, max 100 characters  
+    // English name: required, max 100 characters
     builder.Property(x => x.Name)
            .HasMaxLength(100)
            .IsRequired();
@@ -219,13 +221,14 @@ Provides seed data for countries.
 
 #### Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
+| Property  | Type            | Description                                |
+|-----------|-----------------|--------------------------------------------|
 | `Dataset` | `List<Country>` | Static list of pre-configured country data |
 
 #### Available Data
 
 Currently includes:
+
 - **Thailand** - ID: 66, ISO: "TH", Code: 66, Name: "Thailand", Native: "ไทย", Population: 71,652,176
 
 #### Example
@@ -250,7 +253,7 @@ await context.SaveChangesAsync();
 
 ### Division (Abstract)
 
-**Namespace:** `Wangkanai.Nation.Models`  
+**Namespace:** `Wangkanai.Nation.Models`
 **Inherits:** `Entity<int>`
 
 Abstract base class for administrative divisions (provinces, states, regions, etc.).
@@ -267,14 +270,14 @@ public Division(int id, int countryId, string iso, string name, string native, i
 
 #### Properties
 
-| Property | Type | Description | Max Length |
-|----------|------|-------------|------------|
-| `Id` | `int` | Unique division identifier (inherited) | - |
-| `CountryId` | `int` | Foreign key to parent country | - |
-| `Iso` | `string` | ISO subdivision code | 2 |
-| `Name` | `string` | English division name | 100 |
-| `Native` | `string` | Native language division name | 100 |
-| `Population` | `int` | Division population | - |
+| Property     | Type     | Description                            | Max Length |
+|--------------|----------|----------------------------------------|------------|
+| `Id`         | `int`    | Unique division identifier (inherited) | -          |
+| `CountryId`  | `int`    | Foreign key to parent country          | -          |
+| `Iso`        | `string` | ISO subdivision code                   | 2          |
+| `Name`       | `string` | English division name                  | 100        |
+| `Native`     | `string` | Native language division name          | 100        |
+| `Population` | `int`    | Division population                    | -          |
 
 #### Example
 
@@ -300,45 +303,45 @@ All division types inherit from the `Division` base class and provide specialize
 
 #### Primary Administrative Divisions
 
-| Class | Namespace | Description | Common Usage |
-|-------|-----------|-------------|--------------|
+| Class      | Namespace                 | Description          | Common Usage            |
+|------------|---------------------------|----------------------|-------------------------|
 | `Province` | `Wangkanai.Nation.Models` | Provincial divisions | Canada, Thailand, China |
-| `State` | `Wangkanai.Nation.Models` | State divisions | US, Australia, Germany |
-| `Region` | `Wangkanai.Nation.Models` | Regional divisions | France, Italy, Spain |
-| `County` | `Wangkanai.Nation.Models` | County divisions | UK, Ireland, US |
-| `Canton` | `Wangkanai.Nation.Models` | Cantonal divisions | Switzerland |
-| `District` | `Wangkanai.Nation.Models` | District divisions | India, Bangladesh |
+| `State`    | `Wangkanai.Nation.Models` | State divisions      | US, Australia, Germany  |
+| `Region`   | `Wangkanai.Nation.Models` | Regional divisions   | France, Italy, Spain    |
+| `County`   | `Wangkanai.Nation.Models` | County divisions     | UK, Ireland, US         |
+| `Canton`   | `Wangkanai.Nation.Models` | Cantonal divisions   | Switzerland             |
+| `District` | `Wangkanai.Nation.Models` | District divisions   | India, Bangladesh       |
 
 #### Secondary Administrative Divisions
 
-| Class | Namespace | Description |
-|-------|-----------|-------------|
-| `Municipality` | `Wangkanai.Nation.Models` | Municipal divisions |
-| `Territory` | `Wangkanai.Nation.Models` | Territorial divisions |
-| `Prefecture` | `Wangkanai.Nation.Models` | Prefectural divisions |
-| `Department` | `Wangkanai.Nation.Models` | Departmental divisions |
-| `Area` | `Wangkanai.Nation.Models` | Area divisions |
-| `Community` | `Wangkanai.Nation.Models` | Community divisions |
-| `Parish` | `Wangkanai.Nation.Models` | Parish divisions |
+| Class          | Namespace                 | Description            |
+|----------------|---------------------------|------------------------|
+| `Municipality` | `Wangkanai.Nation.Models` | Municipal divisions    |
+| `Territory`    | `Wangkanai.Nation.Models` | Territorial divisions  |
+| `Prefecture`   | `Wangkanai.Nation.Models` | Prefectural divisions  |
+| `Department`   | `Wangkanai.Nation.Models` | Departmental divisions |
+| `Area`         | `Wangkanai.Nation.Models` | Area divisions         |
+| `Community`    | `Wangkanai.Nation.Models` | Community divisions    |
+| `Parish`       | `Wangkanai.Nation.Models` | Parish divisions       |
 
 #### Specialized Administrative Divisions
 
-| Class | Namespace | Description |
-|-------|-----------|-------------|
-| `Barony` | `Wangkanai.Nation.Models` | Historical baronial divisions |
-| `Banat` | `Wangkanai.Nation.Models` | Banat regional divisions |
-| `Hundred` | `Wangkanai.Nation.Models` | Historical hundred divisions |
-| `Kampong` | `Wangkanai.Nation.Models` | Kampong divisions (Malaysia/Brunei) |
-| `Kingdom` | `Wangkanai.Nation.Models` | Kingdom divisions |
-| `Principality` | `Wangkanai.Nation.Models` | Principality divisions |
-| `Oblast` | `Wangkanai.Nation.Models` | Oblast divisions (Russia/Eastern Europe) |
-| `Regency` | `Wangkanai.Nation.Models` | Regency divisions |
-| `Republic` | `Wangkanai.Nation.Models` | Republic divisions |
-| `Riding` | `Wangkanai.Nation.Models` | Riding divisions |
-| `Theme` | `Wangkanai.Nation.Models` | Theme divisions |
-| `Voivodeship` | `Wangkanai.Nation.Models` | Voivodeship divisions (Poland) |
-| `Banner` | `Wangkanai.Nation.Models` | Banner divisions (Mongolia) |
-| `Barangay` | `Wangkanai.Nation.Models` | Barangay divisions (Philippines) |
+| Class          | Namespace                 | Description                              |
+|----------------|---------------------------|------------------------------------------|
+| `Barony`       | `Wangkanai.Nation.Models` | Historical baronial divisions            |
+| `Banat`        | `Wangkanai.Nation.Models` | Banat regional divisions                 |
+| `Hundred`      | `Wangkanai.Nation.Models` | Historical hundred divisions             |
+| `Kampong`      | `Wangkanai.Nation.Models` | Kampong divisions (Malaysia/Brunei)      |
+| `Kingdom`      | `Wangkanai.Nation.Models` | Kingdom divisions                        |
+| `Principality` | `Wangkanai.Nation.Models` | Principality divisions                   |
+| `Oblast`       | `Wangkanai.Nation.Models` | Oblast divisions (Russia/Eastern Europe) |
+| `Regency`      | `Wangkanai.Nation.Models` | Regency divisions                        |
+| `Republic`     | `Wangkanai.Nation.Models` | Republic divisions                       |
+| `Riding`       | `Wangkanai.Nation.Models` | Riding divisions                         |
+| `Theme`        | `Wangkanai.Nation.Models` | Theme divisions                          |
+| `Voivodeship`  | `Wangkanai.Nation.Models` | Voivodeship divisions (Poland)           |
+| `Banner`       | `Wangkanai.Nation.Models` | Banner divisions (Mongolia)              |
+| `Barangay`     | `Wangkanai.Nation.Models` | Barangay divisions (Philippines)         |
 
 #### Example Usage
 
@@ -356,7 +359,7 @@ var ukCounty = new County(4, 826, "GB-ENG", "Yorkshire", "Yorkshire", 5_400_000)
 
 ### DivisionConfiguration
 
-**Namespace:** `Wangkanai.Nation.Models`  
+**Namespace:** `Wangkanai.Nation.Models`
 **Implements:** `IEntityTypeConfiguration<Division>`
 
 Entity Framework configuration for Division hierarchy using Table Per Hierarchy (TPH) inheritance.
@@ -409,20 +412,20 @@ public class ApplicationDbContext : DbContext
 
 ### Urban (Abstract)
 
-**Namespace:** `Wangkanai.Nation.Urbans`  
+**Namespace:** `Wangkanai.Nation.Urbans`
 **Inherits:** `Entity<int>`
 
 Abstract base class for urban areas (cities, towns, villages, etc.).
 
 #### Properties
 
-| Property | Type | Description | Max Length | Index |
-|----------|------|-------------|------------|-------|
-| `Id` | `int` | Unique urban area identifier (inherited) | - | Primary Key |
-| `DivisionId` | `int` | Foreign key to parent division | - | Yes |
-| `Name` | `string` | English urban area name | 100 | - |
-| `Native` | `string` | Native language urban area name | 100 | - |
-| `Iso` | `string` | ISO urban area code | 5 | Yes |
+| Property     | Type     | Description                              | Max Length | Index       |
+|--------------|----------|------------------------------------------|------------|-------------|
+| `Id`         | `int`    | Unique urban area identifier (inherited) | -          | Primary Key |
+| `DivisionId` | `int`    | Foreign key to parent division           | -          | Yes         |
+| `Name`       | `string` | English urban area name                  | 100        | -           |
+| `Native`     | `string` | Native language urban area name          | 100        | -           |
+| `Iso`        | `string` | ISO urban area code                      | 5          | Yes         |
 
 #### Example
 
@@ -430,7 +433,7 @@ Abstract base class for urban areas (cities, towns, villages, etc.).
 using Wangkanai.Nation.Urbans;
 
 // Create an urban area (using City as example)
-var bangkok = new City 
+var bangkok = new City
 {
     Id = 1,
     DivisionId = 1, // Bangkok Province
@@ -448,25 +451,25 @@ All urban types inherit from the `Urban` base class, providing specialized imple
 
 #### Major Urban Areas
 
-| Class | Namespace | Description |
-|-------|-----------|-------------|
+| Class  | Namespace                 | Description         |
+|--------|---------------------------|---------------------|
 | `City` | `Wangkanai.Nation.Urbans` | Major urban centers |
 | `Town` | `Wangkanai.Nation.Urbans` | Smaller urban areas |
 
 #### Administrative Urban Areas
 
-| Class | Namespace | Description |
-|-------|-----------|-------------|
-| `Ward` | `Wangkanai.Nation.Urbans` | Administrative wards |
-| `Shire` | `Wangkanai.Nation.Urbans` | Shire areas |
-| `Amphor` | `Wangkanai.Nation.Urbans` | Thai district areas |
+| Class    | Namespace                 | Description          |
+|----------|---------------------------|----------------------|
+| `Ward`   | `Wangkanai.Nation.Urbans` | Administrative wards |
+| `Shire`  | `Wangkanai.Nation.Urbans` | Shire areas          |
+| `Amphor` | `Wangkanai.Nation.Urbans` | Thai district areas  |
 
 #### Rural/Small Urban Areas
 
-| Class | Namespace | Description |
-|-------|-----------|-------------|
-| `Village` | `Wangkanai.Nation.Urbans` | Rural villages |
-| `Hamlet` | `Wangkanai.Nation.Urbans` | Small rural settlements |
+| Class     | Namespace                 | Description             |
+|-----------|---------------------------|-------------------------|
+| `Village` | `Wangkanai.Nation.Urbans` | Rural villages          |
+| `Hamlet`  | `Wangkanai.Nation.Urbans` | Small rural settlements |
 
 #### Example Usage
 
@@ -474,31 +477,31 @@ All urban types inherit from the `Urban` base class, providing specialized imple
 using Wangkanai.Nation.Urbans;
 
 // Different urban area types
-var majorCity = new City 
-{ 
-    Id = 1, 
-    DivisionId = 1, 
-    Name = "Bangkok", 
-    Native = "กรุงเทพมหานคร", 
-    Iso = "TH-10" 
+var majorCity = new City
+{
+    Id = 1,
+    DivisionId = 1,
+    Name = "Bangkok",
+    Native = "กรุงเทพมหานคร",
+    Iso = "TH-10"
 };
 
-var smallTown = new Town 
-{ 
-    Id = 2, 
-    DivisionId = 1, 
-    Name = "Ayutthaya", 
-    Native = "อยุธยา", 
-    Iso = "TH-14" 
+var smallTown = new Town
+{
+    Id = 2,
+    DivisionId = 1,
+    Name = "Ayutthaya",
+    Native = "อยุธยา",
+    Iso = "TH-14"
 };
 
-var ruralVillage = new Village 
-{ 
-    Id = 3, 
-    DivisionId = 2, 
-    Name = "Ban Chang", 
-    Native = "บ้านช้าง", 
-    Iso = "TH-20" 
+var ruralVillage = new Village
+{
+    Id = 3,
+    DivisionId = 2,
+    Name = "Ban Chang",
+    Native = "บ้านช้าง",
+    Iso = "TH-20"
 };
 ```
 
@@ -506,7 +509,7 @@ var ruralVillage = new Village
 
 ### UrbanConfiguration
 
-**Namespace:** `Wangkanai.Nation.Urbans`  
+**Namespace:** `Wangkanai.Nation.Urbans`
 **Implements:** `IEntityTypeConfiguration<Urban>`
 
 Entity Framework configuration for Urban hierarchy.
@@ -570,13 +573,14 @@ Provides seed data for Thai provinces.
 
 ##### Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
+| Property  | Type             | Description                       |
+|-----------|------------------|-----------------------------------|
 | `Dataset` | `List<Province>` | Static list of Thai province data |
 
 ##### Available Data
 
 Currently includes:
+
 - **Bangkok** - ID: 66_0001, Country: 66 (Thailand), ISO: "BKK", Name: "Bangkok", Native: "กรุงเทพมหานคร", Population: 5,692,284
 
 ##### Example
