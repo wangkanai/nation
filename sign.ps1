@@ -26,7 +26,7 @@ dotnet nuget sign .\artifacts\*.snupkg -v normal --timestamper http://timestamp.
 
 if (!$publish)
 {
-    write-host "Skip update: Markdown" -ForegroundColor Yellow;
+    write-host "Skip update: Nation" -ForegroundColor Yellow;
     exit;
 }
 dotnet nuget push .\signed\*.nupkg --skip-duplicate -k $env:NUGET_API_KEY  -s https://api.nuget.org/v3/index.json
