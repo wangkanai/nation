@@ -2,12 +2,12 @@
    <PropertyGroup>
       <VersionPrefix>1.0.0</VersionPrefix>
       <Title>Wangkanai Nation</Title>
-      <PackageTags>nation;country;entity;domain;ddd;</PackageTags>
       <Description>Nation: Seed your dataset with actual country data</Description>
+      <PackageTags>nation;country;entity;domain;ddd;</PackageTags>
 
       <RepositoryType>git</RepositoryType>
-      <PackageProjectUrl>https://github.com/wangkanai/nation</PackageProjectUrl>
       <RepositoryUrl>https://github.com/wangkanai/nation.git</RepositoryUrl>
+      <PackageProjectUrl>https://github.com/wangkanai/nation</PackageProjectUrl>
 
       <Company>Wangkanai</Company>
       <Authors>Sarin Na Wangkanai</Authors>
