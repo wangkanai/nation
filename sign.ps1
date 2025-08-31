@@ -1,72 +1,33 @@
 param(
     [Parameter(mandatory=$false)]
-    [bool]$publish=$true,
+    [bool]$publish=$false,
     [Parameter(mandatory=$false)]
-    [bool]$skip=$false,
-    [Parameter(mandatory=$false)]
-    [string]$certicate="Open Source Developer, Sarin Na Wangkanai"
+    [string]$name="Open Source Developer, Sarin Na Wangkanai"
 )
 
-Write-Host "NuGet Certificate: $certicate" -ForegroundColor Magenta
-Write-Host "Nation Package Signing and Publishing" -ForegroundColor Cyan
+remove-item -path .\signed\*.*    -Force -ErrorAction SilentlyContinue
+remove-item -path .\artifacts\*.* -Force -ErrorAction SilentlyContinue
 
-$e=[char]27
-$root=Get-Location
+new-item -Path artifacts -ItemType Directory -Force | out-null
+new-item -Path signed    -ItemType Directory -Force | out-null
 
-    # Get current version from Directory.Build.props
-    [Xml]$xml = Get-Content -Path .\Directory.Build.props
-    $version = $xml.Project.PropertyGroup.VersionPrefix
-    if ($version.GetType().FullName -ne "System.String") {
-        $version = $version[0]
-    }
-    
-    Write-Host "Nation Package Version: $version" -ForegroundColor Yellow
-    
-    # Check if package exists on NuGet
-    $packageName = "Wangkanai.Nation"
-    try {
-        $package = Find-Package -Name $packageName -ProviderName NuGet -AllVersions -ErrorAction SilentlyContinue
-        $latest = if ($package) { ($package | Select-Object -First 1).Version } else { "0.0.0" }
-        
-        if ($latest -ne $version) {
-            Write-Host "$latest < $version - Update needed" -ForegroundColor Green
-        } else {
-            Write-Host "$latest = $version - Skip" -ForegroundColor DarkGray
-            if (-not $skip) {
-                Write-Host "No version change detected" -ForegroundColor Yellow
-                return
-            }
-        }
-    }
-    catch {
-        Write-Host "New package - first publish" -ForegroundColor Blue
-    }
-
-    # Build and pack
-    Write-Host "Building and packing..." -ForegroundColor Yellow
-    dotnet build -c Release --verbosity minimal
-    if ($LASTEXITCODE -ne 0) { throw "Build failed" }
-    
-    dotnet pack -c Release --no-build --verbosity minimal
-    if ($LASTEXITCODE -ne 0) { throw "Pack failed" }
-
-    # Find the generated package
-    $nupkgFiles = Get-ChildItem -Path "src/bin/Release" -Filter "*.nupkg" -Recurse | Sort-Object LastWriteTime -Descending
-    if ($nupkgFiles.Count -eq 0) { throw "No package file found" }
-    
-    $packagePath = $nupkgFiles[0].FullName
-    Write-Host "Package: $packagePath" -ForegroundColor Green
-
-    if ($publish) {
-        Write-Host "Publishing package..." -ForegroundColor Yellow
-        # Note: Actual publishing would require NuGet API key
-        # dotnet nuget push $packagePath --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
-        Write-Host "Package ready for publishing: $packagePath" -ForegroundColor Green
-    }
-
-    Write-Host "Signing and packaging completed!" -ForegroundColor Green
+dotnet --version
+dotnet clean   .\src\ -c Release -tl
+dotnet restore .\src\
+dotnet build   .\src\ -c Release -tl
+Get-ChildItem  .\src\ -Recurse Wangkanai.*.dll | where { $_.Directory -like "*Release*" } | foreach {
+    signtool sign /fd SHA256 /t http://timestamp.digicert.com /n $name $_.FullName
 }
-catch {
-    Write-Host "Error: $_" -ForegroundColor Red
-    exit 1
+
+dotnet pack .\src\ -c Release -tl -o .\artifacts --include-symbols -p:SymbolPackageFormat=snupkg
+
+dotnet nuget sign .\artifacts\*.nupkg  -v normal --timestamper http://timestamp.digicert.com --certificate-subject-name $name -o .\signed
+dotnet nuget sign .\artifacts\*.snupkg -v normal --timestamper http://timestamp.digicert.com --certificate-subject-name $name -o .\signed
+
+if (!$publish)
+{
+    write-host "Skip update: Markdown" -ForegroundColor Yellow;
+    exit;
 }
+dotnet nuget push .\signed\*.nupkg --skip-duplicate -k $env:NUGET_API_KEY  -s https://api.nuget.org/v3/index.json
+dotnet nuget push .\signed\*.nupkg --skip-duplicate -k $env:GITHUB_API_PAT -s https://nuget.pkg.github.com/wangkanai/index.json
